@@ -26,9 +26,11 @@
     };
 
     perrycode-watch = pkgs.writeShellScriptBin "perrycode-watch" ''
+      source="$PWD"
+      cd "$(mktemp -d)"
       exec "${gems}/bin/jekyll" serve \
-        --host 0.0.0.0 \
-        --verbose
+        --source "$source" \
+        --host 0.0.0.0
     '';
 
     perrycode = pkgs.stdenvNoCC.mkDerivation {

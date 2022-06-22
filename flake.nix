@@ -4,16 +4,15 @@
   outputs = { self, nixpkgs }: let
     name = "perrycode";
 
-    nixlessFilter = fname: ftype: let
-      baseFileName = baseNameOf (toString fname);
-    in ! (
-      pkgs.lib.hasSuffix ".nix" baseFileName ||
-      baseFileName == "flake.lock"
-    );
-    nixlessSrc = pkgs.lib.sources.cleanSourceWith {
+    src = pkgs.lib.sources.cleanSourceWith {
       src = self;
       name = "${name}-source";
-      filter = nixlessFilter;
+      filter = fname: ftype: let
+        baseFileName = baseNameOf (toString fname);
+      in ! (
+        pkgs.lib.hasSuffix ".nix" baseFileName ||
+        baseFileName == "flake.lock"
+      );
     };
 
     pkgs = import nixpkgs {
@@ -22,18 +21,21 @@
 
     gems = pkgs.bundlerEnv {
       name = "${name}-gems";
-      gemdir = ./.;
+      gemfile = ./Gemfile;
+      lockfile = ./Gemfile.lock;
+      gemset = import ./gemset.nix;
     };
 
     perrycode-watch = pkgs.writeShellScriptBin "perrycode-watch" ''
+      source="$PWD"
+      cd "$(mktemp -d)"
       exec "${gems}/bin/jekyll" serve \
-        --host 0.0.0.0 \
-        --verbose
+        --source "$source" \
+        --host 0.0.0.0
     '';
 
     perrycode = pkgs.stdenvNoCC.mkDerivation {
-      inherit name;
-      src = nixlessSrc;
+      inherit name src;
       nativeBuildInputs = [
         gems
         gems.wrappedRuby
@@ -61,9 +63,19 @@
       type = "app";
       program = "${self.packages.x86_64-linux.perrycode-watch}/bin/perrycode-watch";
     };
+
+    devShell = perrycode.overrideAttrs (old: {
+      nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.bundix ];
+      BUNDLE_FORCE_RUBY_PLATFORM = "true"; # needed for nokogiri
+      # to regenerate gems from scratch:
+      #   rm Gemfile.lock gemset.nix
+      #   nix shell 'nixpkgs#bundix'
+      #   BUNDLE_FORCE_RUBY_PLATFORM="true" bundix -l
+    });
   in {
     packages.x86_64-linux.perrycode = perrycode;
     packages.x86_64-linux.perrycode-watch = perrycode-watch;
+    devShells.x86_64-linux.default = devShell;
     defaultPackage.x86_64-linux = perrycode;
 
     apps.x86_64-linux.perrycode-watch = perrycode-watch-app;

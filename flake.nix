@@ -66,6 +66,11 @@
 
     devShell = perrycode.overrideAttrs (old: {
       nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.bundix ];
+      BUNDLE_FORCE_RUBY_PLATFORM = "true"; # needed for nokogiri
+      # to regenerate gems from scratch:
+      #   rm Gemfile.lock gemset.nix
+      #   nix shell 'nixpkgs#bundix'
+      #   BUNDLE_FORCE_RUBY_PLATFORM="true" bundix -l
     });
   in {
     packages.x86_64-linux.perrycode = perrycode;

@@ -4,16 +4,15 @@
   outputs = { self, nixpkgs }: let
     name = "perrycode";
 
-    nixlessFilter = fname: ftype: let
-      baseFileName = baseNameOf (toString fname);
-    in ! (
-      pkgs.lib.hasSuffix ".nix" baseFileName ||
-      baseFileName == "flake.lock"
-    );
-    nixlessSrc = pkgs.lib.sources.cleanSourceWith {
+    src = pkgs.lib.sources.cleanSourceWith {
       src = self;
       name = "${name}-source";
-      filter = nixlessFilter;
+      filter = fname: ftype: let
+        baseFileName = baseNameOf (toString fname);
+      in ! (
+        pkgs.lib.hasSuffix ".nix" baseFileName ||
+        baseFileName == "flake.lock"
+      );
     };
 
     pkgs = import nixpkgs {
@@ -22,7 +21,9 @@
 
     gems = pkgs.bundlerEnv {
       name = "${name}-gems";
-      gemdir = ./.;
+      gemfile = ./Gemfile;
+      lockfile = ./Gemfile.lock;
+      gemset = import ./gemset.nix;
     };
 
     perrycode-watch = pkgs.writeShellScriptBin "perrycode-watch" ''
@@ -34,8 +35,7 @@
     '';
 
     perrycode = pkgs.stdenvNoCC.mkDerivation {
-      inherit name;
-      src = nixlessSrc;
+      inherit name src;
       nativeBuildInputs = [
         gems
         gems.wrappedRuby

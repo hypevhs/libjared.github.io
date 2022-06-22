@@ -63,9 +63,14 @@
       type = "app";
       program = "${self.packages.x86_64-linux.perrycode-watch}/bin/perrycode-watch";
     };
+
+    devShell = perrycode.overrideAttrs (old: {
+      nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.bundix ];
+    });
   in {
     packages.x86_64-linux.perrycode = perrycode;
     packages.x86_64-linux.perrycode-watch = perrycode-watch;
+    devShells.x86_64-linux.default = devShell;
     defaultPackage.x86_64-linux = perrycode;
 
     apps.x86_64-linux.perrycode-watch = perrycode-watch-app;

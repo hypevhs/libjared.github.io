@@ -23,8 +23,8 @@
     <link rel="canonical" href="{{ url }}">
     <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | prepend: site.baseurl }}" />
 
-    {% if page.eye_catch %}
-    {% assign ogp_image_url = page.eye_catch %}
+    {% if page.ogp_image_url %}
+    {% assign ogp_image_url = page.ogp_image_url %}
     {% else %}
     {% assign ogp_image_url = site.ogp.image_url %}
     {% endif %}

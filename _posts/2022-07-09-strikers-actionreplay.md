@@ -1,11 +1,18 @@
 ---
 layout: post
-title: Truly infinite power ups in Super Mario Strikers
-tags: re
+title: Hacking Super Mario Strikers for infinite powerups
+tags: reverse-engineering
+date: 2022-07-09T15:04:14-05:00
 ---
-<!-- TODO: eye_catch: https://placekitten.com/200/300 -->
 
-Super Mario Strikers. Dolphin Emulator. The goal is to make the in-game "infinite power ups" cheat *actually* infinite.
+{% include figure.html
+  image="/assets/img/smstrikers.jpg"
+  caption="The final product: utter chaos."
+%}
+
+I disassembled PowerPC instructions in Dolphin Emulator in order to make a cheat code. The aim was to make the in-game "infinite power ups" cheat *actually* infinite.
+
+<!--more-->
 
 ### Analysis
 
@@ -90,8 +97,6 @@ The final AR code is...
 **Code: 04375884 3DCCCCCD**
 
 Note that the in-game cheat "infinite power ups" must be unlocked and enabled for this to work. Since the cheats don't work for cup matches, this won't either.
-
-![](https://i.imgur.com/nlfefMY.png)
 
 ### Other links
 

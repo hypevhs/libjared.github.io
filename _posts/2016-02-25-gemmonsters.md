@@ -5,14 +5,12 @@ tags: java gamedev
 date: 2016/02/25 06:36:00
 ---
 
-### At IPFW, I participated in my first game jam, and made a fun game with my roommate.
+At IPFW, I participated in my first game jam, and made a fun game with my roommate.
 
-<video width="640" height="480" controls>
-	<source src="/assets/vid/gemmonsters.mp4" type="video/mp4">
-	Your browser does not support video tags
-</video>
-
-#### Gem Monsters, a product of 48 hours
+{% include figure.html
+  video_basename="gemmonsters"
+  caption="Gem Monsters, a product of 48 hours."
+%}
 
 <!--more-->
 

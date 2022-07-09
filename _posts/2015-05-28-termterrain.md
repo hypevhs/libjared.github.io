@@ -5,11 +5,12 @@ tags: c89
 date: 2015/05/28 13:00:09
 ---
 
-### I used the diamond-square algorithm to generate a heightmap, then used ncurses to display it in the terminal with colors and varying-intensity ASCII characters.
+I used the diamond-square algorithm to generate a heightmap, then used ncurses to display it in the terminal with colors and varying-intensity ASCII characters.
 
-![](/assets/img/termterrain.png)
-
-#### A top-down view of a sandy beach.
+{% include figure.html
+  image="/assets/img/termterrain.png"
+  caption="A top-down view of a sandy beach."
+%}
 
 <!--more-->
 

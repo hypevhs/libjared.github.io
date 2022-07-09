@@ -5,11 +5,12 @@ tags: python
 date: 2015/04/16 22:50:46
 ---
 
-### I used existing software to recreate models based on OpenGL call dumps
+I used existing software to recreate models based on OpenGL call dumps.
 
-![](/assets/img/modelrip0.png)
-
-#### The model in Blender
+{% include figure.html
+  image="/assets/img/modelrip0.png"
+  caption="The model in Blender."
+%}
 
 <!--more-->
 

@@ -4,7 +4,9 @@
     {% endif %}
     {% if include.video_basename %}
     <video controls>
-        <source src="/assets/vid/{{ include.video_basename }}.mp4" type="video/mp4" />
+        <source src="/assets/vid/{{ include.video_basename }}.mp4" type="video/mp4">
+        <source src="/assets/vid/{{ include.video_basename }}.webm" type="video/webm">
+        <source src="/assets/vid/{{ include.video_basename }}.ogv" type="video/ogg">
         Your browser does not support video tags
     </video>
     {% endif %}

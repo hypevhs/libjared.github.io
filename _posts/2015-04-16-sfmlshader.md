@@ -5,16 +5,12 @@ tags: csharp
 date: 2015/04/16 22:38:13
 ---
 
-### I made a demonstration of OpenGL's fragment shader with SMFL.NET
+I made a demonstration of OpenGL's fragment shader with SMFL.NET.
 
-<video width="640" height="480" controls>
-	<source src="/assets/vid/sfmlshader.webm" type="video/webm">
-	<source src="/assets/vid/sfmlshader.mp4" type="video/mp4">
-	<source src="/assets/vid/sfmlshader.ogv" type="video/ogg">
-	Your browser does not support video tags
-</video>
-
-#### The shader in action
+{% include figure.html
+  video_basename="sfmlshader"
+  caption="The shader in action."
+%}
 
 <!--more-->
 

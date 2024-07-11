@@ -30,4 +30,4 @@ This depends on the font used, but it's generally the same throughout. I turn ea
 * Light blue coast
 * Lowest, dark blue deep sea
 
-[Try it for yourself.](//github.com/libjared/term-terrain) It is written in C.
+[Try it for yourself.](//github.com/hypevhs/term-terrain) It is written in C.

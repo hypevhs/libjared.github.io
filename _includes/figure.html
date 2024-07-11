@@ -6,7 +6,6 @@
     <video controls>
         <source src="/assets/vid/{{ include.video_basename }}.mp4" type="video/mp4">
         <source src="/assets/vid/{{ include.video_basename }}.webm" type="video/webm">
-        <source src="/assets/vid/{{ include.video_basename }}.ogv" type="video/ogg">
         Your browser does not support video tags
     </video>
     {% endif %}
@@ -16,3 +15,17 @@
     </figcaption>
     {% endif %}
 </figure>
+
+<!--
+# firefox chokes on yuv444
+ffmpeg -i gemmonsters-orig.mp4 -pix_fmt yuv420p -crf 20 -b:v 380K -c:a copy gemmonsters.mp4
+
+function towebm() {
+    ffmpeg -i "$1" -c:v libvpx-vp9 -b:v "$3" -pix_fmt yuv420p -pass 1 -an -f null /dev/null && \
+    ffmpeg -i "$1" -c:v libvpx-vp9 -b:v "$3" -pix_fmt yuv420p -pass 2 $4 "$2"
+}
+
+towebm gemmonsters-orig.mp4 gemmonsters.webm 341K "-c:a libopus"
+towebm minedout.mp4 minedout.webm 376K "-an"
+towebm minedoutai.mp4 minedoutai.webm 1938K "-an"
+-->
